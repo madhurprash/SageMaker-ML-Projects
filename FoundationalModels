@@ -1,0 +1,11 @@
+SageMaker JumpStart Foundation Models - Fine-tuning text generation GPT-J 6B
+model on domain specific dataset
+Welcome to Amazon SageMaker Built-in Algorithms! You can use SageMaker Built-in algorithms to solve many Machine Learning tasks through SageMaker Python
+SDK. You can also use these algorithms through one-click in SageMaker Studio via JumpStart.
+In this demo notebook, we demonstrate how to use the SageMaker Python SDK for finetuning Foundation Models and deploying the trained model for inference.
+The Foundation models perform Text Generation task. It takes a teyt string as inout and predicts next words in the sequence
+How to run inference on GPT-J 6B model without finetuning
+How to fine-tune GPT- 6B model on a domain specific dataset, and then run inference on the fine-tuned model. In particular, the example dataset wE demonstrated is publicly available SEC filing of Amazon from ear 2021 to 2022. The expectation is that after fine-tuning, the model should be able to
+generate insightful tet in financial domain
+We compare the inference result for GPT-J 6B before finetuning and after finetuning Note: This notebook was tested on mI t3 medium instance in Amazon SageMaker Studio with Python 3 (Data Science) kernel and in Amazon SageMaker Notebook
+instance with conda nuthon3 kernel
