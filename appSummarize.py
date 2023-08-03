@@ -21,10 +21,14 @@ def chatbot(query_text, file_data):
     
     response = requests.post(AWS_API_GATEWAY_ENDPOINT, json={"messages": messages})
     response_data = response.json()
-    response_text = response_data["response"]
     
-    st.write("Response: " + response_text)
-    messages.append({"role": "assistant", "content": response_text})
+    # Check if 'response' key exists in the response_data
+    if "response" in response_data:
+        response_text = response_data["response"]
+        st.write("Response: " + response_text)
+        messages.append({"role": "assistant", "content": response_text})
+    else:
+        st.write("Error: No response received from the API.")
 
 query_text = st.text_area("Enter Meeting Transcript", height=100)
 file_type = st.selectbox("Select File Type", options=["CSV", "PDF", "Text"])
