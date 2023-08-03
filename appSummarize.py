@@ -81,7 +81,7 @@ if st.button("Send"):
 st.markdown("")
 st.markdown("---")
 st.markdown("")
-st.markdown("<p style='text-align: center'><a href='https://github.com/madhurprash'>Github</a> | <a href='https://huggingface.co/Kaludi'>HuggingFace</a></p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center'><a href='https://github.com/madhurprash'>Github</a> | <a href='https://www.linkedin.com/in/madhur-prashant-781548179?original_referer=https%3A%2F%2Fwww.google.com%2F'>LinkedIn</a></p>", unsafe_allow_html=True)
 
 hide_streamlit_style = """
             <style>
