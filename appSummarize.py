@@ -5,8 +5,8 @@ import io
 from PyPDF2 import PdfReader
 from PIL import Image
 
-st.title("File Q&A AI Assistant")
-st.write("This app allows you to upload a CSV or PDF file, or enter text and ask questions related to the content. The app uses OpenAI's ChatGPT model to assist you in answering your questions about the uploaded content, which is streamed back in real time similar to the ChatGPT interface.")
+st.title("AWS Summarizer")
+st.write("This app allows you to upload a CSV or PDF Transcript file, or enter text and ask questions related to the content. The app uses fine tuned BART model, and OpenAI to summarize and organize your meeting notes.")
 
 messages = [
     {"role": "system", "content": "You are a professional Question and Answer AI Assistant helping with information in regards to a csv, pdf, and text input file."},
@@ -82,7 +82,7 @@ if st.button("Send"):
 st.markdown("")
 st.markdown("---")
 st.markdown("")
-st.markdown("<p style='text-align: center'><a href='https://github.com/Kaludii'>Github</a> | <a href='https://huggingface.co/Kaludi'>HuggingFace</a></p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center'><a href='https://github.com/madhurprash'>Github</a> | <a href='https://huggingface.co/Kaludi'>HuggingFace</a></p>", unsafe_allow_html=True)
 
 hide_streamlit_style = """
             <style>
