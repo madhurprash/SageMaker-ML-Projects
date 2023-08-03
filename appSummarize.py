@@ -26,7 +26,7 @@ def chatbot(query_text, file_data):
     st.write("Response: " + response_text)
     messages.append({"role": "assistant", "content": response_text})
 
-query_text = st.text_area("Enter Meeting Transcript", key="input", height=100)
+query_text = st.text_area("Enter Meeting Transcript", height=100)
 file_type = st.selectbox("Select File Type", options=["CSV", "PDF", "Text"])
 
 file_data = None
