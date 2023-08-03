@@ -1,38 +1,30 @@
-import openai
-import pandas as pd
 import streamlit as st
+import requests
 import io
 from PyPDF2 import PdfReader
-from PIL import Image
+import pandas as pd
 
 st.title("AWS Summarizer")
-st.write("This app allows you to upload a CSV or PDF Transcript file, or enter text and ask questions related to the content. The app uses fine tuned BART model, and OpenAI to summarize and organize your meeting notes.")
+st.write("This app allows you to upload a CSV or PDF Transcript file, or enter text and ask questions related to the content. The app uses a fine-tuned BART model hosted on SageMaker to summarize and organize your meeting notes.")
+
+AWS_API_GATEWAY_ENDPOINT = "<YOUR_API_GATEWAY_ENDPOINT>"
 
 messages = [
     {"role": "system", "content": "You are a professional Question and Answer AI Assistant helping with information in regards to a csv, pdf, and text input file."},
 ]
 
-def chatbot(api_key, query_text, file_data):
-    openai.api_key = api_key
+def chatbot(query_text, file_data):
     if query_text:
         messages.append({"role": "user", "content": query_text})
     if file_data:
         messages.append({"role": "user", "content": f"{file_type} File Type: {file_data}"})
     
-    chat = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo", messages=messages, stream=True
-    )
+    response = requests.post(AWS_API_GATEWAY_ENDPOINT, json={"messages": messages})
+    response_data = response.json()
+    response_text = response_data["response"]
     
-    response_text = st.empty()
-    response_line = ""
-    
-    for chunk in chat:
-        chunk_message = chunk['choices'][0]['delta']
-        if chunk_message.get('content'):
-            response_line += chunk_message['content']
-            response_text.write("Response: " + response_line)
-    
-    messages.append({"role": "assistant", "content": response_line})
+    st.write("Response: " + response_text)
+    messages.append({"role": "assistant", "content": response_text})
 
 query_text = st.text_area("Enter Meeting Transcript", key="input", height=100)
 file_type = st.selectbox("Select File Type", options=["CSV", "PDF", "Text"])
@@ -44,7 +36,7 @@ if file_type == "CSV":
     if file:
         df = pd.read_csv(file)
         st.write("Uploaded CSV file:")
-        st.write(df)       
+        st.write(df)
         file_data = df.to_csv(index=False)
 elif file_type == "PDF":
     file = st.file_uploader("Upload PDF file", type="pdf")
@@ -74,7 +66,7 @@ else:
 
 if st.button("Send"):
     try:
-        chatbot(api_key, query_text, file_data)
+        chatbot(query_text, file_data)
     except Exception as e:
         st.error(str(e))
 
