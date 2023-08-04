@@ -7,7 +7,7 @@ import pandas as pd
 st.title("AWS Summarizer")
 st.write("This app allows you to upload a CSV or PDF Transcript file, or enter text and ask questions related to the content. The app uses a fine-tuned BART model hosted on SageMaker to summarize and organize your meeting notes.")
 
-AWS_API_GATEWAY_ENDPOINT = "https://4750897ggk.execute-api.us-east-1.amazonaws.com/test"
+AWS_API_GATEWAY_ENDPOINT = "https://j558zrugs5.execute-api.us-east-1.amazonaws.com/INVOKESM"
 
 messages = [
     {"role": "system", "content": "You are a professional Question and Answer AI Assistant helping with information in regards to a csv, pdf, and text input file."},
