@@ -1,4 +1,4 @@
-# SageMaker-ML-Projects
+# AI-ML-Projects (Focus on GenAI and Large Language Models)
 This is my journey on SageMaker!
 
    **ML-SageMaker 1.0**
