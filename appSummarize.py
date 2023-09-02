@@ -4,18 +4,19 @@ import io
 from PyPDF2 import PdfReader
 import pandas as pd
 
-st.title("AWS Summarizer")
-st.write("This app allows you to upload a CSV or PDF Transcript file, or enter text and ask questions related to the content. The app uses a fine-tuned BART model hosted on SageMaker to summarize and organize your meeting notes.")
+st.title("Yoga For Physical and Mental Health Bot")
+st.write("This bot provides information and guidance on yoga exercises and practices for improving physical and mental health.")
 
 AWS_API_GATEWAY_ENDPOINT = "https://n16uhtgob1.execute-api.us-east-1.amazonaws.com/TEST/predicttranscript"
 
 messages = [
-    {"role": "system", "content": "You are a professional Question and Answer AI Assistant helping with information in regards to a csv, pdf, and text input file."},
+    {"role": "system", "content": "You are a professional Yoga and Health Assistant providing information and guidance on yoga exercises and practices for physical and mental health."},
 ]
 
 def chatbot(query_text, file_data):
     if query_text:
         messages.append({"role": "user", "content": query_text})
+    
     if file_data:
         messages.append({"role": "user", "content": f"{file_type} File Type: {file_data}"})
     
@@ -30,7 +31,7 @@ def chatbot(query_text, file_data):
     else:
         st.write("Error: No response received from the API.")
 
-query_text = st.text_area("Enter Meeting Transcript", height=100)
+query_text = st.text_area("Ask a Yoga or Health-related Question", height=100)
 file_type = st.selectbox("Select File Type", options=["CSV", "PDF", "Text"])
 
 file_data = None
@@ -76,7 +77,6 @@ if st.button("Send"):
 
 st.markdown("")
 st.markdown("---")
-st.markdown("")
 st.markdown("<p style='text-align: center'><a href='https://github.com/madhurprash'>Github</a> | <a href='https://www.linkedin.com/in/madhur-prashant-781548179?original_referer=https%3A%2F%2Fwww.google.com%2F'>LinkedIn</a></p>", unsafe_allow_html=True)
 
 hide_streamlit_style = """
