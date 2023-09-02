@@ -3,11 +3,13 @@ import requests
 import io
 from PyPDF2 import PdfReader
 import pandas as pd
+import json
 
 st.title("Yoga For Physical and Mental Health Bot")
 st.write("This bot provides information and guidance on yoga exercises and practices for improving physical and mental health.")
 
-AWS_API_GATEWAY_ENDPOINT = "https://n16uhtgob1.execute-api.us-east-1.amazonaws.com/TEST/predicttranscript"
+# SageMaker endpoint URL
+SAGEMAKER_ENDPOINT = "https://bedrockForYoga"
 
 messages = [
     {"role": "system", "content": "You are a professional Yoga and Health Assistant providing information and guidance on yoga exercises and practices for physical and mental health."},
@@ -16,20 +18,29 @@ messages = [
 def chatbot(query_text, file_data):
     if query_text:
         messages.append({"role": "user", "content": query_text})
-    
+       
     if file_data:
         messages.append({"role": "user", "content": f"{file_type} File Type: {file_data}"})
     
-    response = requests.post(AWS_API_GATEWAY_ENDPOINT, json={"messages": messages})
-    response_data = response.json()
+    # Prepare the request payload for SageMaker
+    sagemaker_payload = {
+        "prompt": query_text if query_text else "",  # Use the user's query as the prompt
+        "max_tokens_to_sample": 1,
+        "temperature": 0.5,
+        "top_k": 250,
+        "top_p": 0.5,
+        "stop_sequences": []
+    }
     
-    # Check if 'response' key exists in the response_data
-    if "response" in response_data:
-        response_text = response_data["response"]
+    response = requests.post(SAGEMAKER_ENDPOINT, json=sagemaker_payload, headers={"Content-Type": "application/json"})
+    
+    if response.status_code == 200:
+        response_data = response.json()
+        response_text = response_data.get("response", "No response received from the model.")
         st.write("Response: " + response_text)
         messages.append({"role": "assistant", "content": response_text})
     else:
-        st.write("Error: No response received from the API.")
+        st.write("Error: Failed to get a response from the model.")
 
 query_text = st.text_area("Ask a Yoga or Health-related Question", height=100)
 file_type = st.selectbox("Select File Type", options=["CSV", "PDF", "Text"])
